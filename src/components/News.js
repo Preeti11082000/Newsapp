@@ -42,6 +42,9 @@ export default class News extends Component {
       loading:false
     });
   }
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
   handlePrevClick = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apikey=eceb04c2df7b4ae29d3c39c52aa6d45c&page=${
       this.state.page - 1
@@ -75,7 +78,7 @@ export default class News extends Component {
     console.log("render");
     return (
       <div className="container my-3">
-        <h1 className="text-center" style={{margin:"35px 0px"}}>NewsMonkey Top Headline</h1>
+        <h1 className="text-center" style={{margin:"35px 0px"}}>NewsMonkey Top Headline from {this.capitalizeFirstLetter(this.props.category)} </h1>
        {this.state.loading && <Spinner />}
 
         <div className="row">
@@ -87,6 +90,9 @@ export default class News extends Component {
                   description={element.description ? element.description : ""}
                   imageurl={element.urlToImage}
                   newsUrl={element.url}
+                  author={element.author}
+                  date={element.publishedAt}
+                  source={element.source.name}
                 />
               </div>
             );
